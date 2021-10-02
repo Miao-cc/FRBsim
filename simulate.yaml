@@ -1,0 +1,30 @@
+fastdata: 
+  - fastdata/M92_tracking-M01_0214.fits
+binarydata: 
+  - simBinarydata/test_DM_200_P0_0.0007236s.dat
+  - simBinarydata/test_DM_200_P0_0.0007236s.dat
+  - simBinarydata/test_DM_200_P0_0.0007236s.dat
+  - simBinarydata/test_DM_200_P0_0.0007236s.dat
+  - simBinarydata/test_DM_200_P0_0.0007236s.dat
+  - simBinarydata/test_DM_200_P0_0.0007236s.dat
+  - simBinarydata/test_DM_200_P0_0.0007236s.dat
+specdata:
+  - bandspec_1200-1600MHz.npy
+  - bandspec_500-2000MHz.npy
+  - bandspec_1300-1700MHz.npy
+  - bandspec_1300-1600MHz.npy
+  - bandspec_1400-1600MHz.npy
+  - bandspec_1300-1500MHz.npy
+  - bandspec_1400-1700MHz.npy
+toafile:
+  - FRB121102TOA.tim
+outfile: 
+  - simulateTest1.fits
+scale:
+  - 10.0
+  - 10.0
+  - 10.0
+  - 10.0
+  - 10.0
+  - 10.0
+  - 10.0
