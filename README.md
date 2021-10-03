@@ -5,14 +5,14 @@
 ![bandspec](bandspec.png)
 
 2. create a binary file
-3. 
+
  ```
  cd OPTIMUS
  make
 ```
 
 3. simulate the file
-  > OPTIMUS/simulateSimplePsr_mcc -p parmas/FAST_19Beam.params -p params/test_DM_300_P0_0.0007236s.params -o test_DM_300_P0_0.0007236s.dat
+  > OPTIMUS/simulateSimplePsr_mcc -p params/FAST_19Beam.params -p params/test_DM_300_P0_0.0007236s.params -o test_DM_300_P0_0.0007236s.dat
 
 Example:
 ```
@@ -73,3 +73,17 @@ scale:
  
  DM=565,,P=1.6s,simBinaryData length = 4 sec
 
+
+### envirement
+python2.7
+
+```
+astropy==2.0.16
+fitsio==1.0.1
+matplotlib==2.2.5
+numpy==1.16.2
+PyWavelets==1.0.3
+PyYAML==5.4.1
+scipy==1.2.3
+
+```
