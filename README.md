@@ -29,6 +29,7 @@ This example will simulate a single pulse with pulse width equals to `1.61061273
 4. combine the simulation data and backend file
 
  ` python simMultiPsr.py simulateFRB1000bursts.yaml       (MiaoCC) `
+ 
  ` python simMultiPsr_RMS.py simulateFRB1000bursts.yaml   (WangPei)`
 
 5. plot for checking the simulating results
