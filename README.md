@@ -5,8 +5,11 @@
 ![bandspec](bandspec.png)
 
 2. create a binary file
-  > cd OPTIMUS
-  > make
+3. 
+ ```
+ cd OPTIMUS
+ make
+```
 
 3. simulate the file
   > OPTIMUS/simulateSimplePsr_mcc -p parmas/FAST_19Beam.params -p params/test_DM_300_P0_0.0007236s.params -o test_DM_300_P0_0.0007236s.dat
