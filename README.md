@@ -23,16 +23,12 @@ width: 0.007893
 ```
 This example will simulate a single pulse with pulse width equals to `1.610612736*0.007893=0.012712566325248 sec (P0*width)`
 
- 
-
-
 4. combine the simulation data and backend file
-    python simMultiPsr.py simulateFRB1000bursts.yaml       (MiaoCC)
-    python simMultiPsr_RMS.py simulateFRB1000bursts.yaml   (WangPei)
+` python simMultiPsr.py simulateFRB1000bursts.yaml       (MiaoCC) `
+` python simMultiPsr_RMS.py simulateFRB1000bursts.yaml   (WangPei)`
 
 5. plot for checking the simulating results
-    DM=565
-    P=1.6s
-    simBinaryData length = 4 sec
+`python getScale.py simulate.yaml`
+ 
+ DM=565,,P=1.6s,simBinaryData length = 4 sec
 
-python getScale.py simulate.yaml
