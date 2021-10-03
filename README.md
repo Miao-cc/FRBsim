@@ -54,7 +54,7 @@ scale:
   - 6.0
   - 5.0
 ```
-    - fastdata:
+  * fastdata:
 
 
 5. combine the simulation data and backend file
