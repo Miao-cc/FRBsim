@@ -1,13 +1,13 @@
 fastdata: 
-  - fastdata/M92_tracking-M01_0214.fits
+  - fastdata/J2355+0050_swiftcalibration-M01_0133.fits
 binarydata: 
-  - simBinarydata/test_DM_200_P0_0.0007236s.dat
-  - simBinarydata/test_DM_200_P0_0.0007236s.dat
-  - simBinarydata/test_DM_200_P0_0.0007236s.dat
-  - simBinarydata/test_DM_200_P0_0.0007236s.dat
-  - simBinarydata/test_DM_200_P0_0.0007236s.dat
+  - simBinarydata/test_DM_200_W10_0.001.dat
+  - simBinarydata/test_DM_200_W10_0.001.dat
+  - simBinarydata/test_DM_200_W10_0.001.dat
+  - simBinarydata/test_DM_200_W10_0.001.dat
+  - simBinarydata/test_DM_200_W10_0.001.dat
 specdata:
-  - bandspec_1200-1600MHz.npy
+  - bandspec_500-2000MHz.npy
   - bandspec_500-2000MHz.npy
   - bandspec_1300-1700MHz.npy
   - bandspec_1300-1600MHz.npy
@@ -17,8 +17,8 @@ toafile:
 outfile: 
   - simulateTest1.fits
 scale:
-  - 15.0
-  - 8.0
-  - 7.0
-  - 6.0
+  - 100.0
+  - 20.0
+  - 10.0
   - 5.0
+  - 3.0
