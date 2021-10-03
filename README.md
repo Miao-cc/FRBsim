@@ -13,13 +13,13 @@
 
 Example:
 
- >> name: J1950+30
- >> p0: 1.610612736
- >> dm: 565
- >> raj: 4.510914803
- >> decj: 0.136026590
- >> flux: 0.1
- >> width: 0.007893
+> name: J1950+30
+> p0: 1.610612736
+> dm: 565
+> raj: 4.510914803
+> decj: 0.136026590
+> flux: 0.1
+> width: 0.007893
 
 This example will simulate a single pulse with pulse width equals to `1.610612736*0.007893=0.012712566325248 sec (P0*width)`
 
