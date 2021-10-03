@@ -107,7 +107,7 @@ elif (len(sys.argv)==6):
         print "error startfreq, change to ", startfreq
     if endfreq >= nf or endfreq < 0:
         endfreq = nf-400
-        print "error endfreq, change to ", endfreq)
+        print "error endfreq, change to ", endfreq
 
 else :
     print "unknown error, quit!"
@@ -125,7 +125,8 @@ BJtime = Starttime_BJ.strftime("%Y-%m-%d %H:%M:%S")
 
 #information out put
 print "hdu list length ", len(hdulist)
-print 'data.shape:', data1.shape)
+print 'data.shape:', data1.shape
+print 'data max, min', data1.max(), data1.min()
 print 'MJD:', tstart
 print 'fch1, df', fch1, df
 #print 'freq %s MHz, nchan %d, bw %s MHz' % ( obsfreq, obsnchan, obsbw)
@@ -183,9 +184,10 @@ for i in range(c):
 
     fig.colorbar(im, ax = ax)
 
-imgfilename=(filename.split('/')[-1])[:-5]+'.png'
+#imgfilename=(filename.split('/')[-1])[:-5]+'.png'
+imgfilename=(filename.split('/')[-1])[:-5]+'.eps'
 print "creating img: ", imgfilename
-savefig(imgfilename)
+savefig(imgfilename, format="eps")
 print "finish out put img file"
 #clf()
 
