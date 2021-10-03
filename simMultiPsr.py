@@ -8,6 +8,12 @@ import numpy as np
 import matplotlib.pyplot as plt
 from simFRB import *
 
+def readBackend(fo, subintStart, subintEnd):
+    backend = []
+    for rowindex in range(subintStart, subintEnd):
+        data=fits[1].read(rows=[rowindex], columns=['DATA'])
+        backend.append(data[0][0][:,:,:,:])
+    return np.array(backend)
 
 
 ######################################################################
@@ -109,6 +115,7 @@ dataout = np.zeros(1,dtype=[('TSUBINT','float64'),('OFFS_SUB','float64'),('LST_S
 
 # define the simdata to add the pulse together
 simdata=np.zeros((nline*nsblk,nchan))
+# read the backend data to get the STD
 
 # add offset in subint 
 print "start reshape file",datetime.datetime.now()
@@ -116,16 +123,27 @@ print "start reshape file",datetime.datetime.now()
 for num, filename in enumerate(binaryFile):
     #### read the spec index from file
     specshape = np.load(specFile[num])
-    scaleValue = scale[num]
+    SNR = scale[num]
     binData = readBinary(filename, simBinaryNchan, simNsamp)
-    print "+"*50
-    print "Reading spectra shape: ", specFile[num], "Scale Value: ", scaleValue
-    print "Reading simulation data: ", num, filename, "Pulse TOA: ", pulseOffset[num]
+    # start subint and end subint
     arrayStart = int(pulseOffset[num]/tbin)
     arrayEnd = arrayStart + simNsamp
+    """
+    subintStart = int(arrayStart/nsblk)
+    subintEnd = int(arrayEnd/nsblk)
+    if subintEnd/nline>1.0: subintEnd=nline
+    backend = readBackend(fits, subintStart, subintEnd)
+    backend_pol0 = backend[:,:,0,:,0]
+    scaleSTD = np.std(backend_pol0.mean(axis=2))
+    scaleMean = np.mean(backend_pol0)
+    print 'backend_pol0.shape', backend_pol0.shape, 'backend_pol0.dtype', backend_pol0.dtype, 'backend_pol0.max', np.max(backend_pol0),'backend_pol0.min',np.min(backend_pol0), 'backend_pol0.std in time serise', scaleSTD, 'backend_pol0.mean in time serise', scaleMean
+    """
     # simulate pulse * scale * frequence shape
-    simdata[arrayStart:arrayEnd, :] = binData*scaleValue*specshape + simdata[arrayStart:arrayEnd, :]
-
+    simdata[arrayStart:arrayEnd, :] = binData*SNR*specshape + simdata[arrayStart:arrayEnd, :]
+    #simdata[arrayStart:arrayEnd, :] = binData*SNR*scaleSTD*specshape + simdata[arrayStart:arrayEnd, :]
+    print "+"*50
+    print "Reading spectra shape: ", specFile[num], "SNR Value: ", SNR 
+    print "Reading simulation data: ", num, filename, "Pulse TOA: ", pulseOffset[num]
 
 simdata = simdata.reshape((nline,nsblk,1,nchan,1))
 print 'simdata.dtype',simdata.dtype,'simadata.max',np.max(simdata),'simdata.min',np.min(simdata)
@@ -152,8 +170,9 @@ dataout['DAT_OFFS'][0][0:nchan]=fits[1].read(rows=[rowindex], columns=['DAT_OFFS
 dataout['DAT_SCL'][0][0:nchan]=fits[1].read(rows=[rowindex], columns=['DAT_SCL'])[0][0][0:nchan]
 
 data=fits[1].read(rows=[rowindex], columns=['DATA'])
-print 'data.dtype',data[0][0].dtype,'data.max',np.max(data[0][0]),'data.min',np.min(data[0][0])
+print 'data.dtype',data[0][0].dtype,'data.max',np.max(data[0][0]),'data.min',np.min(data[0][0]), 'data.shape', data[0][0].shape
 
+# nsblk, pol, channel, 1
 tmpdata = data[0][0][:,0,:,0]
 #########
 #smoothBandpass = smooth_bandpass(tmpdata.sum(axis=0))/nsblk
