@@ -26,13 +26,44 @@ width: 0.007893
 ```
 This example will simulate a single pulse with pulse width equals to `1.610612736*0.007893=0.012712566325248 sec (P0*width)`
 
-4. combine the simulation data and backend file
+4. define the pulses
+
+```
+fastdata:
+  - fastdata/M92_tracking-M01_0214.fits
+binarydata:
+  - simBinarydata/test_DM_200_P0_0.0007236s.dat
+  - simBinarydata/test_DM_200_P0_0.0007236s.dat
+  - simBinarydata/test_DM_200_P0_0.0007236s.dat
+  - simBinarydata/test_DM_200_P0_0.0007236s.dat
+  - simBinarydata/test_DM_200_P0_0.0007236s.dat
+specdata:
+  - bandspec_1200-1600MHz.npy
+  - bandspec_500-2000MHz.npy
+  - bandspec_1300-1700MHz.npy
+  - bandspec_1300-1600MHz.npy
+  - bandspec_1400-1600MHz.npy
+toafile:
+  - FRB121102TOA.tim
+outfile:
+  - simulateTest1.fits
+scale:
+  - 15.0
+  - 8.0
+  - 7.0
+  - 6.0
+  - 5.0
+```
+    - fastdata:
+
+
+5. combine the simulation data and backend file
 
  ` python simMultiPsr.py simulateFRB1000bursts.yaml       (MiaoCC) `
  
  ` python simMultiPsr_RMS.py simulateFRB1000bursts.yaml   (WangPei)`
 
-5. plot for checking the simulating results
+6. plot for checking the simulating results
 `python getScale.py simulate.yaml`
  
  DM=565,,P=1.6s,simBinaryData length = 4 sec
