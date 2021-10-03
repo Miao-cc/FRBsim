@@ -54,14 +54,19 @@ scale:
   - 6.0
   - 5.0
 ```
-  * fastdata:
+  * fastdata: the telescope noise
+  * binarydata: single pulse simulation file with different pulse width
+  * specdata: scale used to scale the pulse in frequency
+  * toafile: time of arrival
+  * outfile: the output result
+  * scale: used to addjust pulse S/N
 
 
 5. combine the simulation data and backend file
 
- ` python simMultiPsr.py simulateFRB1000bursts.yaml       (MiaoCC) `
+ ` python simMultiPsr.py simulate.yaml       (MiaoCC) `
  
- ` python simMultiPsr_RMS.py simulateFRB1000bursts.yaml   (WangPei)`
+ ` python simMultiPsr_RMS.py simulate.yaml   (WangPei)`
 
 6. plot for checking the simulating results
 `python getScale.py simulate.yaml`
