@@ -30,7 +30,7 @@ fastFile = params["fastdata"]
 outFile = params["outfile"]
 scale =  params["scale"]
 
-tele_param = readSetting("simBinarydata/FAST_19Beam.params")
+tele_param = readSetting("params/FAST_19Beam.params")
 simBinaryLen = tele_param["t1"]
 simBinaryTsamp = tele_param["tsamp"]
 simBinaryNchan = tele_param["nchan"]
@@ -77,7 +77,7 @@ print 'noiseData.dtype',noiseData[0][0].dtype,'noiseData.max',np.max(noiseData[0
 noiseData = (np.swapaxes(noiseData.squeeze().reshape((-1, npol, nchan)), 1, 2)).sum(axis=2) / 2.
 noiseSTD = np.std(noiseData)
 noiseMean = np.mean(noiseData)
-print noiseMean, noiseSTD
+print noiseMean, noiseSTD 
 
 
 specshape = np.load(specFile[Num])

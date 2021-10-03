@@ -41,7 +41,7 @@ def readSetting(filename):
     """
     # reading telescope setting from simulate file
     with open(filename, 'r') as fp:
-        params=yaml.load(fp.read())
+        params=yaml.load(fp.read(), Loader=yaml.FullLoader)
     return params
 
 def smooth_bandpass(bandpass):

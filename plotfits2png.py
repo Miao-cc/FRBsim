@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#)!/usr/bin/env python
 #import pyfits
 import numpy as np  
 import astropy.io.fits as pyfits
@@ -107,7 +107,7 @@ elif (len(sys.argv)==6):
         print "error startfreq, change to ", startfreq
     if endfreq >= nf or endfreq < 0:
         endfreq = nf-400
-        print "error endfreq, change to ", endfreq
+        print "error endfreq, change to ", endfreq)
 
 else :
     print "unknown error, quit!"
@@ -124,10 +124,10 @@ BJtime = Starttime_BJ.strftime("%Y-%m-%d %H:%M:%S")
 
 
 #information out put
-print "hdu list length ", len(hdulist) 
-print 'data.shape:', data1.shape
+print "hdu list length ", len(hdulist)
+print 'data.shape:', data1.shape)
 print 'MJD:', tstart
-print 'fch1, df', fch1, df 
+print 'fch1, df', fch1, df
 #print 'freq %s MHz, nchan %d, bw %s MHz' % ( obsfreq, obsnchan, obsbw)
 #print 'file length %f tsamp %f nsamp %f' %(tsamp*nsamp,tsamp,nsamp)
 

@@ -42,7 +42,7 @@ simBinaryTsamp = tele_param["tsamp"]
 simBinaryNchan = tele_param["nchan"]
 simNsamp = int(simBinaryLen / simBinaryTsamp)
 
-print "Simulation File Info: length: %s sec, sample time: %s sec, number of channel: %s" %(simBinaryLen, simBinaryTsamp, simBinaryNchan)
+print "Simulation File Info: length: %s sec, sample time: %s sec, number of channel: %s" %(simBinaryLen, simBinaryTsamp, simBinaryNchan))
 
 ########################################
 # get pulse TOA, should between 0~nline*nsblk*tbin
