@@ -115,8 +115,9 @@ print 'simdata.dtype',simdata.dtype,'simadata.max',np.max(simdata),'simdata.min'
 simdata = simdata*noiseSTD*3
 
 ## dedisperse
-outdata =(noiseData + np.multiply(simdata, specshape)).astype('uint8')  
-data_dedis = dedisperse(outdata, 565, fchannel, tbin)
+outdata =(noiseData + np.multiply(simdata, specshape)).astype('uint8')
+#data_dedis = dedisperse(outdata, 565, fchannel, tbin)
+data_dedis = dedisperse(outdata, 200, fchannel, tbin)
 print data_dedis.max()
 print data_dedis.shape
 
