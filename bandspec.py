@@ -38,6 +38,8 @@ def bandspec(params):
         plt.savefig("bandspec.png")
         plt.show()
 
+    return bandspec
+
  
 
 
