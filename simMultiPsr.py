@@ -128,22 +128,25 @@ for num, filename in enumerate(binaryFile):
     # start subint and end subint
     arrayStart = int(pulseOffset[num]/tbin)
     arrayEnd = arrayStart + simNsamp
-    """
+    #"""
     subintStart = int(arrayStart/nsblk)
     subintEnd = int(arrayEnd/nsblk)
-    if subintEnd/nline>1.0: subintEnd=nline
+    if subintEnd>nline: subintEnd=nline
     backend = readBackend(fits, subintStart, subintEnd)
     backend_pol0 = backend[:,:,0,:,0]
     scaleSTD = np.std(backend_pol0.mean(axis=2))
     scaleMean = np.mean(backend_pol0)
-    print 'backend_pol0.shape', backend_pol0.shape, 'backend_pol0.dtype', backend_pol0.dtype, 'backend_pol0.max', np.max(backend_pol0),'backend_pol0.min',np.min(backend_pol0), 'backend_pol0.std in time serise', scaleSTD, 'backend_pol0.mean in time serise', scaleMean
-    """
+    #"""
     # simulate pulse * scale * frequence shape
-    simdata[arrayStart:arrayEnd, :] = binData*SNR*specshape + simdata[arrayStart:arrayEnd, :]
-    #simdata[arrayStart:arrayEnd, :] = binData*SNR*scaleSTD*specshape + simdata[arrayStart:arrayEnd, :]
-    print "+"*50
-    print "Reading spectra shape: ", specFile[num], "SNR Value: ", SNR 
+    #simdata[arrayStart:arrayEnd, :] = binData*SNR*specshape + simdata[arrayStart:arrayEnd, :]
+    scaledSimdata = binData*SNR*scaleSTD*specshape
+    simdata[arrayStart:arrayEnd, :] = scaledSimdata + simdata[arrayStart:arrayEnd, :]
+    print "scaled pulse: max, min: ", np.max(scaledSimdata), np.min(scaledSimdata) , "SNR*scaleSTD", SNR*scaleSTD
+    print "Reading spectra shape: ", specFile[num], "SNR Value: ", SNR
     print "Reading simulation data: ", num, filename, "Pulse TOA: ", pulseOffset[num]
+    print 'backend_pol0.shape', backend_pol0.shape, 'backend_pol0.min, backend_pol0.max',np.min(backend_pol0), np.max(backend_pol0), 'backend_pol0.std,backend_pol0.mean in time serise', scaleSTD, scaleMean
+    print "+"*50
+
 
 simdata = simdata.reshape((nline,nsblk,1,nchan,1))
 print 'simdata.dtype',simdata.dtype,'simadata.max',np.max(simdata),'simdata.min',np.min(simdata)
@@ -183,11 +186,12 @@ tmpdata = data[0][0][:,0,:,0]
 #tmpdata += (simdata[rowindex,:,0,:,0] * (smoothBandpass).astype('uint8')
 #########
 # remove smooth bandpass
-tmpdata += (simdata[rowindex,:,0,:,0]).astype('uint8')
+tmpdata = tmpdata.astype('float')
+tmpdata += (simdata[rowindex,:,0,:,0])
 #tmpdata /= 2# set max(tmpdata> 255) =255 rather than tmpdata/2
 tmpdata[tmpdata > 255] = 255
 tmpdata[tmpdata < 0 ] = 0
-dataout['DATA'][0][:,0,:,0] = tmpdata
+dataout['DATA'][0][:,0,:,0] = tmpdata.astype('uint8')
 
 fitsout.write(dataout)
 #=======================================================================
@@ -295,10 +299,11 @@ for rowindex in range(1,nline):
     #########
     # remove smooth bandpass
     #tmpdata += (simdata[rowindex,:,0,:,0] * (smoothBandpass).astype('uint8')
-    tmpdata += (simdata[rowindex,:,0,:,0]).astype('uint8')
+    tmpdata = tmpdata.astype('float')
+    tmpdata += (simdata[rowindex,:,0,:,0])
     tmpdata[tmpdata > 255] = 255
     tmpdata[tmpdata < 0 ] = 0
-    dataout['DATA'][0][:,0,:,0] = tmpdata
+    dataout['DATA'][0][:,0,:,0] = tmpdata.astype('uint8')
 
     fitsout[-1].append(dataout)
 
