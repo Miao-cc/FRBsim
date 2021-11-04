@@ -6,7 +6,7 @@ binarydata:
   - simBinarydata/test_DM_200_W10_0.001.dat
   - simBinarydata/test_DM_200_W10_0.001.dat
 specdata:
-  - bandspec_500-2000MHz.npy
+  - bandspec_1400-1600MHz.npy
   - bandspec_500-2000MHz.npy
   - bandspec_500-2000MHz.npy
   - bandspec_500-2000MHz.npy
@@ -15,7 +15,7 @@ toafile:
 outfile: 
   - simulateTest1.fits
 scale:
-  - 3.0
-  - 5.0
+  - 8.0
+  - 10.0
   - 10.0
   - 20.0
