@@ -125,6 +125,7 @@ for num, filename in enumerate(binaryFile):
     specshape = np.load(specFile[num])
     SNR = scale[num]
     binData = readBinary(filename, simBinaryNchan, simNsamp)
+
     # start subint and end subint
     arrayStart = int(pulseOffset[num]/tbin)
     arrayEnd = arrayStart + simNsamp
@@ -141,6 +142,7 @@ for num, filename in enumerate(binaryFile):
     #simdata[arrayStart:arrayEnd, :] = binData*SNR*specshape + simdata[arrayStart:arrayEnd, :]
     scaledSimdata = binData*SNR*scaleSTD*specshape
     simdata[arrayStart:arrayEnd, :] = scaledSimdata + simdata[arrayStart:arrayEnd, :]
+
     print "scaled pulse: max, min: ", np.max(scaledSimdata), np.min(scaledSimdata) , "SNR*scaleSTD", SNR*scaleSTD
     print "Reading spectra shape: ", specFile[num], "SNR Value: ", SNR
     print "Reading simulation data: ", num, filename, "Pulse TOA: ", pulseOffset[num]
