@@ -12,7 +12,6 @@ print 'record start time:'
 starttime=datetime.datetime.now()
 print starttime
 
-
 Num = 1
 
 SettingFile = sys.argv[1]
@@ -36,7 +35,8 @@ simBinaryTsamp = tele_param["tsamp"]
 simBinaryNchan = tele_param["nchan"]
 
 simNsamp = int(simBinaryLen / simBinaryTsamp)
-simdata=np.zeros(simNsamp*1*simBinaryNchan*1)
+#simdata=np.zeros(simNsamp*1*simBinaryNchan*1)
+
 print "Simulation File Info: length: %s sec, sample time: %s sec, number of channel: %s" %(simBinaryLen, simBinaryTsamp, simBinaryNchan)
 
 # read header
@@ -55,20 +55,22 @@ nline=header1['NAXIS2']
 npol = header1['NPOL']
 fchannel = fits[1].read(rows=[0], columns=['DAT_FREQ'])[0][0][0:nchan]
 
+if simBinaryNchan!=nchan:
+    print "Error in channel number"
+    sys.exit(0)
+
 # define the read subint nunber
 nsubint = int(simNsamp // nsblk)
 print nsubint
 
+# load the noise file 
+# define the simulate data
 noiseData=hdu1.read(rows=range(nsubint), columns=['DATA'])
 noiseData = np.array([noiseData[i][0] for i in range(nsubint)])
-
-### get the single rms in each channel
-#for isub in range(nline):
-#    subintData = hdu1.read(rows=isub, columns=['DATA'])
-#    subintData = subintData[0][0]
-#    print "RMS in subint %s is %s" %(isub, np.std(subintData))
+simdata=np.zeros(nsubint*nsblk*simBinaryNchan*1)
 
 fits.close()
+
 print 'DAT_FREQ:', fchannel, fchannel.shape
 print 'NSBLK: ', nsblk, 'sample time(s): ', tbin, 'channel width(MHz): ', chan_bw, "NAXIS2: ", nline
 print 'noiseData.dtype',noiseData[0][0].dtype,'noiseData.max',np.max(noiseData[0][0]),'noiseData.min',np.min(noiseData[0][0]),"noiseData.shape", noiseData.shape, "Time sacle (sec): ", tbin*nsubint*nsblk
@@ -105,13 +107,10 @@ with open(binaryFile[Num], 'rb') as binfile:
     binfile.close()
 
 simdata = simdata.reshape((nsubint*nsblk,nchan))
-#simdata = simdata.reshape((nsubint,nsblk,1,nchan,1))
+
 print "end reshape file",datetime.datetime.now()
 print 'simdata.dtype',simdata.dtype,'simadata.max',np.max(simdata),'simdata.min',np.min(simdata)
 
-
-#noZeroIndex = (simdata>1e-5)
-#simdata[noZeroIndex] = simdata[noZeroIndex]*noiseSTD*3
 simdata = simdata*noiseSTD*3
 
 ## dedisperse
@@ -127,7 +126,6 @@ print data_dedis.shape
 plot = True
 #plot = False
 if (plot):
-    #plt.plot(fchannel, specshape)
     plt.subplot(3,2,1)
     plt.imshow(simdata.T, origin='lower', aspect='auto', cmap='binary')
     plt.ylim(0,nchan)
@@ -161,11 +159,11 @@ if (plot):
 
     plt.subplot(3,2,6)
     pulseProfile = data_dedis.sum(axis=1)
-    #pulseProfile = np.roll(pulseProfile, len(pulseProfile)//2 - pulseProfile.argmax())
     plt.plot(pulseProfile)
     plt.xlim(0,len(pulseProfile))
     plt.title("Pulse profile")
     plt.xlabel("time sample")
 
     plt.tight_layout()
-    plt.show()
+    plt.savefig("check_plot.png", dpi=300)
+    #plt.show()
