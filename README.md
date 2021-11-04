@@ -46,8 +46,8 @@ This example will simulate a single pulse with pulse width equals to `0.8*0.0078
 
  - Tips: 
   1. pulse start time delay is `pow(2,10)*tsamp = 0.0503316` sec 
-  2. t1 in FAST_19Beam.params should be more than time delay cause by DM, like t1=0.6 > (0.461111+0.0503316)
-  3. P0 in file 'test_DM_565_W10_0.0078.params' should be more than the t1 in file 'FAST_19Beam.params', like p1=0.8 > t1=0.6
+  2. `t1` in `FAST_19Beam.params` should be more than time delay cause by DM, like t1=0.6 > (0.461111+0.0503316)
+  3. `P0` in file `test_DM_565_W10_0.0078.params` should be more than the `t1` in file `FAST_19Beam.params`, like p1=0.8 > t1=0.6
 
 4. define the pulses
 
